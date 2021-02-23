@@ -28,10 +28,10 @@ function draw(){
     ctx.clearRect(0,0,canvas.width, canvas.height);
     drawball();
     drawbar();
-    if(y+dy>canvas.height-30 || y+dy <0){
+    if(y+dy>canvas.height-ballRadius-30 || y+dy < ballRadius){
         dy=-dy;
     }
-    if(x+dx>canvas.width || x+dx < 0){
+    if(x+dx>canvas.width-ballRadius || x+dx < ballRadius){
         dx=-dx;
     }
     x += dx;
