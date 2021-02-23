@@ -15,7 +15,37 @@ let barX = (canvas.width-barWidth)/2;
 let barY = canvas.height-barHeight-10;
 let ground = canvas.height-ballRadius-barHeight-10;
 let offsetX, offsexY;
+let brickRowcount = 2;
+let brickColumnCount = 3;
+let brickWidth = 50;
+let brickHeight = 20;
+let brickPadding = 10;
+let brickOffsetTop = 30;
+let brickOffsetLeft = 30;
 
+let bricks = [];
+for(let c=0; c<brickColumnCount; c++){
+    bricks[c] = [];
+    for(let r=0; r<brickRowcount; r++){
+        bricks[c][r] = {x:0, y:0};
+    }
+}
+
+function drawBricks(){
+    for(let c=0; c<brickColumnCount; c++){
+        for(let r=0; r<brickRowcount; r++){
+            let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+            let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+            bricks[c][r].x = 0;
+            bricks[c][r].y = 0;
+            ctx.beginPath();
+            ctx.rect(brickX,brickY,brickWidth,brickHeight);
+            ctx.fillStyle = "red"
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
+}
 function reOffset(){
     let BB=canvas.getBoundingClientRect();
     offsetX=BB.left;
@@ -41,17 +71,20 @@ function logKey(e) {
   }
 console.log(screenY);
 console.log("Hello world")
+
+drawBricks();
+
 function drawball(){
     ctx.beginPath();
     ctx.arc(x,y,ballRadius,0,Math.PI*2,false);
-    ctx.fillstyle = "black";
+    ctx.fillStyle = "rgb(37, 179, 223)";
     ctx.fill();
     ctx.closePath();
 }
 function drawbar(){
     ctx.beginPath();
     ctx.rect(barX,barY,barWidth,barHeight);
-    ctx.fillstyle = "red";
+    ctx.fillStyle = "rgb(37, 179, 223)";
     ctx.fill();
     ctx.closePath();
 }
@@ -74,7 +107,7 @@ function draw(){
     if(x+dx>canvas.width-ballRadius || x+dx < ballRadius){
         dx=-dx;
     }
-    // x += dx;
+    x += dx;
     y += dy; 
 }
 
