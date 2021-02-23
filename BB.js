@@ -27,22 +27,38 @@ let bricks = [];
 for(let c=0; c<brickColumnCount; c++){
     bricks[c] = [];
     for(let r=0; r<brickRowcount; r++){
-        bricks[c][r] = {x:0, y:0};
+        bricks[c][r] = {x:0, y:0, status:1};
     }
 }
 
 function drawBricks(){
     for(let c=0; c<brickColumnCount; c++){
         for(let r=0; r<brickRowcount; r++){
-            let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-            let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-            bricks[c][r].x = brickX;
-            bricks[c][r].y = brickY;
-            ctx.beginPath();
-            ctx.rect(brickX,brickY,brickWidth,brickHeight);
-            ctx.fillStyle ="red";
-            ctx.fill();
-            ctx.closePath();
+            if(bricks[c][r].status == 1){        
+                let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX,brickY,brickWidth,brickHeight);
+                ctx.fillStyle ="red";
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
+}
+
+function collisionDetection(){
+    for(let c=0; c<brickColumnCount; c++){
+        for(let r=0; r<brickRowcount; r++){
+            let b = bricks[c][r];
+            if(b.status == 1){
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight){
+                    dy = -dy;
+                    b.status = 0;
+                }
+            }
         }
     }
 }
@@ -71,7 +87,7 @@ function logKey(e) {
   }
 console.log(screenY);
 console.log("Hello world")
-
+console.log(status);
 
 
 function drawball(){
@@ -93,6 +109,7 @@ function draw(){
     drawBricks();
     drawball();
     drawbar();
+    collisionDetection();
     if(y+dy < ballRadius){
         dy=-dy;
     } else if(y + dy > ground){
