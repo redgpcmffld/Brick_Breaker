@@ -7,6 +7,7 @@ let y = canvas.height-40;
 let dx = 2;
 let dy = -2;
 let ballRadius = 5;
+let bar = 10;
 
 
 function drawball(){
@@ -28,9 +29,12 @@ function draw(){
     drawball();
     drawbar();
     if(y+dy>canvas.height-30 || y+dy <0){
-    dy=-dy;
+        dy=-dy;
     }
-    // x += dx;
+    if(x+dx>canvas.width || x+dx < 0){
+        dx=-dx;
+    }
+    x += dx;
     y += dy; 
 }
 
