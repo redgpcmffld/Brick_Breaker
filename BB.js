@@ -14,7 +14,6 @@ let barWidth = 50;
 let barX = (canvas.width-barWidth)/2;
 let barY = canvas.height-barHeight-10;
 let ground = canvas.height-ballRadius-barHeight-10;
-let offsetX, offsexY;
 let brickRowcount = 4;
 let brickColumnCount = 4;
 let brickWidth = 50;
@@ -22,6 +21,15 @@ let brickHeight = 20;
 let brickPadding = 10;
 let brickOffsetTop = 25;
 let brickOffsetLeft = 35;
+
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+function mouseMoveHandler(e){
+    let relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width){
+        barX = relativeX - barWidth/2;
+    }
+}
 
 let bricks = [];
 for(let c=0; c<brickColumnCount; c++){
@@ -62,32 +70,6 @@ function collisionDetection(){
         }
     }
 }
-function reOffset(){
-    let BB=canvas.getBoundingClientRect();
-    offsetX=BB.left;
-    offsetY=BB.top;
-}
-
-window.onscroll=function(e){reOffset();}
-window.onresize=function(e){reOffset();}
-
-
-let screenLog = document.querySelector('#screen-log');
-document.addEventListener('mousemove', logKey);
-
-function logKey(e) {
-    screenLog.innerText = `
-      Screen X/Y: ${e.screenX}, ${e.screenY}
-      Client X/Y: ${e.clientX}, ${e.clientY}`;
-  }
-  function checkClickMap(e) {
-    if (e.screenX < 50) doRedButton();
-    if (50 <= e.screenX && e.screenX < 100) doYellowButton();
-    if (e.screenX >= 100) doRedButton();
-  }
-console.log(screenY);
-console.log("Hello world")
-console.log(status);
 
 
 function drawball(){
