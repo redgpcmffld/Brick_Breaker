@@ -39,7 +39,7 @@ function drawball(){
 function drawbar(){
     ctx.beginPath();
     ctx.rect(screenX,screenY,barWidth,barHeight);
-    ctx.fillstyle = "black";
+    ctx.fillstyle = "blue";
     ctx.fill();
     ctx.closePath();
 }
