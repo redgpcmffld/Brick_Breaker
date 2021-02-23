@@ -14,8 +14,20 @@ let barWidth = 50;
 let barX = (canvas.width-barWidth)/2;
 let barY = canvas.height-barHeight-10;
 let ground = canvas.height-ballRadius-barHeight-10;
+let offsetX, offsexY;
+
+function reOffset(){
+    let BB=canvas.getBoundingClientRect();
+    offsetX=BB.left;
+    offsetY=BB.top;
+}
+
+window.onscroll=function(e){reOffset();}
+window.onresize=function(e){reOffset();}
+
+
 let screenLog = document.querySelector('#screen-log');
-document.addEventListener('mouseclick', logKey);
+document.addEventListener('mousemove', logKey);
 
 function logKey(e) {
     screenLog.innerText = `
@@ -38,8 +50,8 @@ function drawball(){
 }
 function drawbar(){
     ctx.beginPath();
-    ctx.rect(screenX,screenY,barWidth,barHeight);
-    ctx.fillstyle = "blue";
+    ctx.rect(barX,barY,barWidth,barHeight);
+    ctx.fillstyle = "red";
     ctx.fill();
     ctx.closePath();
 }
@@ -47,13 +59,22 @@ function draw(){
     ctx.clearRect(0,0,canvas.width, canvas.height);
     drawball();
     drawbar();
-    if(y+dy>ground || y+dy < ballRadius){
+    if(y+dy < ballRadius){
         dy=-dy;
+    } else if(y + dy > ground){
+        if(x > barX && x < barX + barWidth){
+            dy = -dy;
+            
+        }
+        else{
+            // alert("GAME OVER");
+            document.location.reload();
+        }
     }
     if(x+dx>canvas.width-ballRadius || x+dx < ballRadius){
         dx=-dx;
     }
-    x += dx;
+    // x += dx;
     y += dy; 
 }
 
