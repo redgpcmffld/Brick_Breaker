@@ -15,7 +15,7 @@ let barX = (canvas.width-barWidth)/2;
 let barY = canvas.height-barHeight-10;
 let ground = canvas.height-ballRadius-barHeight-10;
 let screenLog = document.querySelector('#screen-log');
-document.addEventListener('mousemove', logKey);
+document.addEventListener('mouseclick', logKey);
 
 function logKey(e) {
     screenLog.innerText = `
