@@ -27,7 +27,12 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
 function mouseMoveHandler(e){
     let relativeX = e.clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width){
-        barX = relativeX - barWidth/2;
+        if(relativeX + barWidth > canvas.width){
+        barX = relativeX-canvas.width-barWidth;
+        console.log('if');
+        }
+        barX = relativeX;
+        console.log('what?');
     }
 }
 
@@ -96,8 +101,7 @@ function draw(){
         dy=-dy;
     } else if(y + dy > ground){
         if(x > barX && x < barX + barWidth){
-            dy = -dy;
-            
+            dy = -dy;   
         }
         else{
             // alert("GAME OVER");
