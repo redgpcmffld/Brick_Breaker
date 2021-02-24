@@ -21,18 +21,19 @@ let brickHeight = 20;
 let brickPadding = 10;
 let brickOffsetTop = 25;
 let brickOffsetLeft = 35;
+let bricksCount = brickColumnCount*brickRowcount;
+let win = false;
 
+console.log(win);
 document.addEventListener("mousemove", mouseMoveHandler, false);
-
+if(win == true){
+    brickColumnCount += 1;
+}
 function mouseMoveHandler(e){
     let relativeX = e.clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width){
-        if(relativeX + barWidth > canvas.width){
-        barX = relativeX-canvas.width-barWidth;
-        console.log('if');
-        }
-        barX = relativeX;
-        console.log('what?');
+        barX = relativeX - barWidth;
+        console.log("ok");
     }
 }
 
@@ -70,6 +71,8 @@ function collisionDetection(){
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight){
                     dy = -dy;
                     b.status = 0;
+                    bricksCount -= 1;
+                    console.log(bricksCount);
                 }
             }
         }
@@ -110,6 +113,11 @@ function draw(){
     }
     if(x+dx>canvas.width-ballRadius || x+dx < ballRadius){
         dx=-dx;
+    }
+    if(bricksCount == 0){
+        brickColumnCount += 1;
+        win = true;
+        document.location.reload();
     }
     x += dx;
     y += dy; 
