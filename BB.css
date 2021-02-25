@@ -24,11 +24,8 @@ canvas{
     background: white;
     display :block;
     margin:0 auto;
+    margin-bottom: 100px;
     cursor:none;
-}
-#playground{
-    padding : 50px;
-    align-items: center;
 }
 #home{
     display: flex;
