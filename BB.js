@@ -108,6 +108,7 @@ function draw(){
     if(bricksCount == 0){
     brickRowcount += 1;
     win = true;
+    alert("다음 단계에 도전하세요.")
     console.log('win');
     stop();
     }
@@ -118,9 +119,10 @@ function draw(){
             dy = -dy;   
         }
         else{
+            brickRowcount = 4;
             die = true;
             stop();
-            // alert("GAME OVER");
+            alert("GAME OVER");
             console.log('reload');
         }
     }
@@ -153,8 +155,6 @@ function stop(){
 function start(){
     let start = new MouseEvent("click")
     game_start = setInterval(draw,10);
-    
-    
 }
 function quit(){
     let quit = new MouseEvent("click")
