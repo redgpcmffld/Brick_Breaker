@@ -23,6 +23,8 @@ let brickOffsetTop = 25;
 let brickOffsetLeft = 35;
 let bricksCount = brickColumnCount*brickRowcount;
 let win = false;
+let die = false;
+let game_start = false;
 
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
@@ -96,12 +98,19 @@ function drawbar(){
     ctx.fill();
     ctx.closePath();
 }
+
 function draw(){
     ctx.clearRect(0,0,canvas.width, canvas.height);
     drawBricks();
     drawball();
     drawbar();
     collisionDetection();
+    if(bricksCount == 0){
+    brickRowcount += 1;
+    win = true;
+    console.log('win');
+    stop();
+    }
     if(y+dy < ballRadius){
         dy=-dy;
     } else if(y + dy > ground){
@@ -109,25 +118,43 @@ function draw(){
             dy = -dy;   
         }
         else{
-            alert("GAME OVER");
-            document.location.reload();
+            die = true;
+            stop();
+            // alert("GAME OVER");
+            console.log('reload');
         }
     }
     if(x+dx>canvas.width-ballRadius || x+dx < ballRadius){
         dx=-dx;
     }
-    if(bricksCount == 0){
-        brickColumnCount += 1;
-        win = true;
-        document.location.reload();
-    }
     x += dx;
     y += dy; 
 }
 
+function stop(){
+    x = canvas.width/2;
+    y = canvas.height-40;
+    dx = 2;
+    dy = -2;
+    barX = (canvas.width-barWidth)/2;
+    barY = canvas.height-barHeight-10;
+    bricksCount = brickColumnCount*brickRowcount;
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    clearInterval(game_start);
+    console.log('stop')
+    for(let c=0; c<brickColumnCount; c++){
+        bricks[c] = [];
+        for(let r=0; r<brickRowcount; r++){
+            bricks[c][r] = {x:0, y:0, status:1};
+        }
+    }
+}
+
 function start(){
     let start = new MouseEvent("click")
-        setInterval(draw,10);
+    game_start = setInterval(draw,10);
+    
+    
 }
 function quit(){
     let quit = new MouseEvent("click")
@@ -135,3 +162,6 @@ function quit(){
 }
 document.getElementById("start_button").addEventListener('click',start);
 document.getElementById("quit_button").addEventListener('click',quit);
+
+
+
