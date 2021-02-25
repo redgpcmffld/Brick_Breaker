@@ -26,6 +26,9 @@ canvas{
     margin:0 auto;
     cursor:none;
 }
+#canvas_field{
+    padding : 50px;
+}
 #home{
     display: flex;
     box-sizing: content-box;
