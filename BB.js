@@ -6,8 +6,8 @@ let cw = canvas.width;
 let ch = canvas.height;
 let x = canvas.width/2;
 let y = canvas.height-40;
-let dx = 2;
-let dy = -2;
+let dx = 4;
+let dy = -4;
 let ballRadius = 5;
 let barHeight = 10;
 let barWidth = 50;
@@ -25,6 +25,8 @@ let bricksCount = brickColumnCount*brickRowcount;
 let win = false;
 let die = false;
 let game_start = false;
+let game_stop = false;
+let drawing = false;
 
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
@@ -130,19 +132,27 @@ function draw(){
         dx=-dx;
     }
     x += dx;
-    y += dy; 
+    y += dy;
+    drawing = requestAnimationFrame(draw);
+    if(game_stop == true){
+        cancelAnimationFrame(drawing);
+    }
+    game_stop = false;
 }
 
+
 function stop(){
+    game_stop = true;
+    cancelAnimationFrame(drawing);
+    die = false;
     x = canvas.width/2;
     y = canvas.height-40;
-    dx = 2;
-    dy = -2;
+    dx = 4;
+    dy = -4;
     barX = (canvas.width-barWidth)/2;
     barY = canvas.height-barHeight-10;
     bricksCount = brickColumnCount*brickRowcount;
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    clearInterval(game_start);
     console.log('stop')
     for(let c=0; c<brickColumnCount; c++){
         bricks[c] = [];
@@ -150,11 +160,13 @@ function stop(){
             bricks[c][r] = {x:0, y:0, status:1};
         }
     }
+  
 }
 
 function start(){
     let start = new MouseEvent("click")
-    game_start = setInterval(draw,10);
+    draw();
+    console.log(game_stop);
 }
 function quit(){
     let quit = new MouseEvent("click")
