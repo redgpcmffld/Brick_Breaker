@@ -24,8 +24,8 @@ let brickOffsetLeft = 35;
 let bricksCount = brickColumnCount*brickRowcount;
 let win = false;
 
-console.log(win);
 document.addEventListener("mousemove", mouseMoveHandler, false);
+
 if(win == true){
     brickColumnCount += 1;
 }
@@ -33,7 +33,9 @@ function mouseMoveHandler(e){
     let relativeX = e.clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width){
         barX = relativeX - barWidth;
-        console.log("ok");
+        if(barX < 0){
+            barX = 0;
+        }
     }
 }
 
@@ -107,7 +109,7 @@ function draw(){
             dy = -dy;   
         }
         else{
-            // alert("GAME OVER");
+            alert("GAME OVER");
             document.location.reload();
         }
     }
@@ -123,6 +125,13 @@ function draw(){
     y += dy; 
 }
 
-
-setInterval(draw,10);
-
+function start(){
+    let start = new MouseEvent("click")
+        setInterval(draw,10);
+}
+function quit(){
+    let quit = new MouseEvent("click")
+    document.location.reload();
+}
+document.getElementById("start_button").addEventListener('click',start);
+document.getElementById("quit_button").addEventListener('click',quit);
