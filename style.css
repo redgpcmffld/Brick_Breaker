@@ -1,0 +1,49 @@
+:root{
+    background-color: black;
+    color:blanchedalmond;
+}
+#title h1{
+    text-align: center;
+}
+nav ul li{
+    display: inline;
+    list-style: none;
+}
+ul{
+    padding: 0px;
+}
+#nav_title{
+    text-align: center;
+}
+a{
+    text-decoration: none;
+    color: blanchedalmond;
+}
+canvas{
+    padding: 0;
+    background: white;
+    display :block;
+    margin:0 auto;
+    margin-bottom: 100px;
+    cursor:none;
+}
+#home{
+    display: flex;
+    box-sizing: content-box;
+    flex-basis: auto;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    line-height: 20%;
+}
+#buttons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+@media(max-width : 480px){
+    #home{
+        line-height: normal;
+    }
+}
